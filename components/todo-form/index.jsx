@@ -44,7 +44,6 @@ const useStyles = makeStyles({
 		marginBottom: "60px",
 		padding: "5px",
 		color: "#FFFFFF",
-		backgroundColor: "#FEC134",
 		boxShadow: "none",
 		marginLeft: "8px",
 	},
@@ -53,9 +52,13 @@ const useStyles = makeStyles({
 		marginBottom: "60px",
 		padding: "5px",
 		color: "#FFFFFF",
-		backgroundColor: "#5AB85B",
 		boxShadow: "none",
 		marginLeft: "8px",
+	},
+	buttonWrapper: {
+		display: "flex",
+		flexDirection: "row",
+		justifyContent: "space-around",
 	},
 });
 
@@ -68,6 +71,7 @@ const TodoForm = ({ initialValues, addTodos, editTodo, handleClose }) => {
 		errorMessageStyle,
 		cancelButtonStyle,
 		addButtonStyle,
+		buttonWrapper,
 	} = useStyles();
 
 	return (
@@ -130,23 +134,18 @@ const TodoForm = ({ initialValues, addTodos, editTodo, handleClose }) => {
 								</Typography>
 							</Box>
 
-							<Box
-								style={{
-									display: "flex",
-									flexDirection: "row",
-									justifyContent: "space-around",
-								}}
-								boxShadow={1}
-							>
+							<Box className={buttonWrapper} boxShadow={1}>
 								<Button
 									onClick={handleClose}
 									variant="contained"
+									color="secondary"
 									className={cancelButtonStyle}
 								>
 									Cancel
 								</Button>
 								<Button
 									variant="contained"
+									color="primary"
 									type="submit"
 									className={addButtonStyle}
 								>

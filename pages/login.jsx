@@ -66,7 +66,7 @@ const useStyles = makeStyles({
 	buttonStyle: {
 		borderRadius: "5px",
 		width: "100%",
-		backgroundColor: "#5BB85C",
+		// backgroundColor: "#5BB85C",
 		color: "#FFFFFF",
 		marginTop: "35px",
 		marginBottom: "10px",
@@ -143,7 +143,7 @@ const Index = () => {
 	};
 
 	return (
-		<div className={bodyWrapper}>
+		<div className={bodyWrapper}>  
 			{loading ? (
 				<p>Loading.....</p>
 			) : (
@@ -221,8 +221,8 @@ const Index = () => {
 										</Typography>
 
 										<Button
-											variant="contained"
-											color="#337AB7"
+										variant="contained"
+										color="primary"
 											type="submit"
 											className={buttonStyle}
 										>

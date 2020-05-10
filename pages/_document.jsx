@@ -16,11 +16,7 @@ export default class MyDocument extends Document {
 		const styleTags = sheet.getStyleElement();
 
 		// Step 4: Pass styleTags as a prop
-        return { ...page, styleTags };
-        
-        
-
-    
+		return { ...page, styleTags };
 	}
 
 	render() {
