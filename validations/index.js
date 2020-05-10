@@ -1,0 +1,1 @@
+export const STRING_OF_CHARACTERS = /^(?![ .]+$)[a-zA-Z .]*$/g;
