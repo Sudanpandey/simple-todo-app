@@ -30,7 +30,7 @@ const useStyles = makeStyles({
 	},
 	inputStyle: {
 		fontFamily: "Roboto, Helvetica, Arial, sans-serif",
-		color:"#3F3738",
+		color: "#3F3738",
 		width: "100%",
 		backgroundColor: "#ffffff",
 		outline: "none",
@@ -41,7 +41,7 @@ const useStyles = makeStyles({
 	messageStyle: {
 		fontFamily: "Roboto, Helvetica, Arial, sans-serif",
 		fontSize: "16px",
-		color:"#3F3738",	
+		color: "#3F3738",
 		width: "93.7%",
 		backgroundColor: "#ffffff",
 		outline: "none",
@@ -63,8 +63,14 @@ const useStyles = makeStyles({
 		flexDirection: "row",
 		justifyContent: "space-between",
 		padding: "25px 0px",
-
 		boxShadow: "none",
+	},
+	formTitle: {
+		paddingTop: "20px",
+		paddingBottom: "20px",
+		fontSize: "18px",
+		textAlign: "center",
+		color: "#3F3738",
 	},
 });
 
@@ -77,6 +83,7 @@ const TodoForm = ({ initialValues, addTodos, editTodo, handleClose }) => {
 		errorMessageStyle,
 		buttonWrapper,
 		messageStyle,
+		formTitle,
 	} = useStyles();
 
 	return (
@@ -99,15 +106,7 @@ const TodoForm = ({ initialValues, addTodos, editTodo, handleClose }) => {
 				return (
 					<form onSubmit={handleSubmit}>
 						<Box className={formWrapper}>
-							<Typography
-								style={{
-									paddingTop: "20px",
-									paddingBottom: "20px",
-									fontSize: "18px",
-									textAlign: "center",
-									color:"#3F3738"
-								}}
-							>
+							<Typography className={formTitle}>
 								{values.todoID ? "Edit Todo" : "Add  Todo"}
 							</Typography>
 							<Box style={{ marginBottom: "25px" }}>

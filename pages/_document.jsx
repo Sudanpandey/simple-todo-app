@@ -17,7 +17,7 @@ export default class MyDocument extends Document {
 
 		// Step 4: Pass styleTags as a prop
 		return { ...page, styleTags };
-	}
+	}	
 
 	render() {
 		return (
