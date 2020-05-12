@@ -6,9 +6,8 @@ import moment from "moment";
 import axios from "axios";
 import Router from "next/router";
 
-import { Box, Button } from "@material-ui/core";
+import { Box, Button, Modal } from "@material-ui/core";
 
-import Modal from "@material-ui/core/Modal";
 import DateFnsUtils from "@date-io/date-fns";
 import {
 	KeyboardDatePicker,
@@ -21,17 +20,17 @@ import { makeStyles } from "@material-ui/core/styles";
 import { TodoForm, TodoItem, ConfirmBox } from "../components";
 
 const useStyles = makeStyles({
+	root: {
+		marginTop: "30px",
+		width: "100%",
+	},
 	pickerStyle: {
-		padding: "2px 5px",
-		backgroundColor: "white",
+		padding: " 3px 0px 3px 13px",
+		backgroundColor: "#FFFFFF",
 		width: "300px",
-		border: "1px solid #CCCCCC",
+		border: "1px solid  #CCCCCC",
 		borderRadius: "5px",
 		color: "#AFAFAF",
-	},
-	root: {
-		marginTop: "80px",
-		width: "100%",
 	},
 	navigation: {
 		width: "100%",
@@ -47,9 +46,12 @@ const useStyles = makeStyles({
 		height: "40px",
 	},
 	logoutButton: {
-		marginTop: "5px",
+		marginTop: "16px",
+		marginRight:"29px",
 		borderRadius: "5px",
-		width: "10%",
+		padding: "8px",
+		height: "1%",
+		width: "8%",
 		color: "#FFFFFF",
 	},
 	bodyWrapper: {
@@ -58,11 +60,12 @@ const useStyles = makeStyles({
 		backgroundColor: " #F2F2F2",
 	},
 	addTodoButton: {
-		marginTop: "50px",
-		marginLeft: "600px",
+		marginTop: "30px",
+		padding: "8px",
+		width: "8%",
+		marginLeft: "46%",
 		borderRadius: "5px",
 		color: "#FFFFFF",
-		padding: "15px",
 	},
 	scrollWrapper: {
 		display: "flex",
@@ -81,24 +84,15 @@ const useStyles = makeStyles({
 		color: "#ffffff",
 	},
 	todoForm: {
+		top: "14% !important",
+		left: "29% !important",
 		width: "500px",
-		marginLeft: "400px",
-		marginTop: "100px",
-		// backgroundColor: " #F2F2F2",
-		textAlign: "center",
-		// top: "14%",
-		// left: "29%",
 	},
 	confirmBox: {
-		width: "300px",
-		marginLeft: "500px",
-		marginTop: "100px",
-		top: "15%",
-		left: "15%",
-		// backgroundColor: " #F2F2F2",
+		width: "500px",
+		top: "14% !important",
+		left: "29% !important",
 		textAlign: "center",
-
-		// backgroundColor: "#FFFFFF",
 	},
 });
 
@@ -124,9 +118,9 @@ const Todo = () => {
 		confirmBox,
 	} = useStyles();
 
-	const [selectedDate, setSelectedDate] = useState(
-		moment(new Date()).format("YYYY-MM-DD")
-	);
+	const today = moment(new Date()).format("YYYY-MM-DD");
+
+	const [selectedDate, setSelectedDate] = useState(today);
 	const [open, setOpen] = useState({ action: false });
 	const [selectedTodo, setSelectedTodo] = useState(initialValues);
 	const [loading, setLoading] = useState(true);
@@ -161,7 +155,7 @@ const Todo = () => {
 		try {
 			const token = localStorage.getItem("token");
 			const { userID } = jwt_decode(token);
-			await axios.post("http://localhost:3000/todos", {
+			await axios.post(`${process.env.API_URL}/todos`, {
 				...values,
 				userID,
 				selectedDate: selectedDate,
@@ -175,7 +169,7 @@ const Todo = () => {
 
 	const deleteTodos = async (todoID) => {
 		try {
-			await axios.delete(`http://localhost:3000/todos?todoID=${todoID}`);
+			await axios.delete(`${process.env.API_URL}/todos?todoID=${todoID}`);
 			getTodos(selectedDate);
 			handleClose();
 		} catch (error) {
@@ -186,7 +180,7 @@ const Todo = () => {
 	const editTodo = async (values) => {
 		try {
 			await axios.put(
-				`http://localhost:3000/todos?todoID=${values.todoID}`,
+				`${process.env.API_URL}/todos?todoID=${values.todoID}`,
 				values
 			);
 			handleClose();
@@ -199,7 +193,7 @@ const Todo = () => {
 	const completeTodo = async (values) => {
 		try {
 			await axios.put(
-				`http://localhost:3000/todos/complete?todoID=${values.todoID}`,
+				`${process.env.API_URL}/todos/complete?todoID=${values.todoID}`,
 				{ ...values, completed: true }
 			);
 			getTodos(selectedDate);
@@ -246,6 +240,7 @@ const Todo = () => {
 					>
 						{["add", "edit"].includes(open.mode) ? (
 							<TodoForm
+								title=" Add Todo  "
 								initialValues={selectedTodo}
 								addTodos={addTodos}
 								editTodo={editTodo}
@@ -283,11 +278,8 @@ const Todo = () => {
 										}}
 										InputProps={{
 											disableUnderline: true,
-											className: { pickerStyle },
+											className: pickerStyle,
 										}}
-										// InputLabelProps={{
-										// 	shrink: true,
-										// }}
 										variant="inline"
 										autoOk
 									/>
@@ -306,32 +298,46 @@ const Todo = () => {
 						</Box>
 					</Box>
 					<Box className={bodyWrapper}>
-						<Button
-							type="button"
-							color="primary"
-							variant="contained"
-							onClick={() => handleOpen("add", true)}
-							className={addTodoButton}
-						>
-							Add Todo
-						</Button>
+						{moment(selectedDate).isSameOrAfter(today) && (
+							<Button
+								type="button"
+								color="primary"
+								variant="contained"
+								onClick={() => handleOpen("add", true)}
+								className={addTodoButton}
+							>
+								Add Todo
+							</Button>
+						)}
 
 						<Box className={scrollWrapper}>
 							<Box className={scrollbar}>
 								<div className={root}>
-									{todos.map((todo) => {
-										return (
-											<TodoItem
-												todo={todo}
-												deleteTodos={deleteTodos}
-												setSelectedTodo={
-													setSelectedTodo
-												}
-												completeTodo={completeTodo}
-												handleOpen={handleOpen}
-											/>
-										);
-									})}
+									{todos.length ? (
+										todos.map((todo) => {
+											return (
+												<TodoItem
+													todo={todo}
+													deleteTodos={deleteTodos}
+													setSelectedTodo={
+														setSelectedTodo
+													}
+													completeTodo={completeTodo}
+													handleOpen={handleOpen}
+												/>
+											);
+										})
+									) : (
+										<p
+											style={{
+												textAlign: "center",
+												color: "#606F89",
+											}}
+										>
+											{`No todos found for
+										${moment(selectedDate).format("dddd, MMMM Do YYYY")}`}
+										</p>
+									)}
 								</div>
 							</Box>
 						</Box>

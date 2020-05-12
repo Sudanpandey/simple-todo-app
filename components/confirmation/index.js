@@ -4,59 +4,49 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles({
 	boxWrapper: {
 		backgroundColor: " #F2F2F2",
+		borderRadius:"5px",
 		textAlign: "center",
 	},
 	modelWrapper: {
 		display: "flex",
 		flexDirection: "row",
-		justifyContent: "space-around",
-	},
-	closeButtonStyle: {
-		marginTop: "100px",
-		marginBottom: "60px",
-		padding: "5px",
-		color: "#FFFFFF",
-		// backgroundColor: "#52AF51",
-		boxShadow: "none",
-		marginLeft: "8px",
-	},
-	confirmButtonStyle: {
-		marginTop: "100px",
-		marginBottom: "60px",
-		padding: "5px",
-		color: "#FFFFFF",
-		// backgroundColor: "#E94336",
-		boxShadow: "none",
-		marginLeft: "8px",
+		justifyContent: "space-between",
+
+		padding: " 0px 20px 17px 20px",
 	},
 });
 
 const confirmBox = ({ title, body, onClose, onConfirm, selectedTodo }) => {
-	const {
-		boxWrapper,
-		closeButtonStyle,
-		confirmButtonStyle,
-		modelWrapper,
-	} = useStyles();
+	const { boxWrapper, modelWrapper } = useStyles();
 	console.log({ title, body, onClose, onConfirm });
 	return (
 		<Box className={boxWrapper}>
-			<Typography>{title}</Typography>
-			<Typography>{body}</Typography>
+			<Typography
+				style={{
+					paddingTop: "10px",
+					fontSize: "20px",  	
+					color:"#3F3738"
+				}}
+			>
+				{title}
+			</Typography>
+			<Typography
+				style={{
+					padding: "15px 20px 20px",
+					fontSize: "15px",
+					color:"#8E9190"
+				}}
+			>
+				{body}
+			</Typography>
 			<Box className={modelWrapper}>
-				<Button
-					color="primary"
-					variant="contained"
-					onClick={onClose}
-					className={closeButtonStyle}
-				>
+				<Button color="primary" variant="outlined" onClick={onClose}>
 					Cancel
 				</Button>
 				<Button
 					color="secondary"
-					variant="contained"
+					variant="outlined"
 					onClick={() => onConfirm(selectedTodo.todoID)}
-					className={confirmButtonStyle}
 				>
 					Confirm
 				</Button>

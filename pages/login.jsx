@@ -11,11 +11,10 @@ import {
 	Snackbar,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { logInValidationSchema  } from "../validations/form/login";
+import { logInValidationSchema } from "../validations/form/login";
 
 import MuiAlert from "@material-ui/lab/Alert";
 import { Formik } from "formik";
-
 
 const useStyles = makeStyles({
 	bodyWrapper: {
@@ -78,20 +77,6 @@ function Alert(props) {
 }
 
 
-
-// const logInValidationSchema = Yup.object().shape({
-// 	email: Yup.string()
-// 		.email("Please enter valid email")
-// 		.min(2, "Too Short!")
-// 		.max(25, "Too Long!")
-// 		.required("Email is required"),
-// 	password: Yup.string()
-// 		.min(2, "Too Short!")
-// 		.max(25, "Too Long!")
-// 		.min(6, "Password has to be longer than 6 characters!")
-// 		.required(" Password is required"),
-// });
-
 const initialValues = {
 	email: "",
 	password: "",
@@ -113,11 +98,11 @@ const Index = () => {
 	const [message, setMessage] = useState();
 
 	useEffect(() => {
-		const token = localStorage.getItem("token");
+		const token = localStorage.getItem("token")
 		if (token) {
 			Router.push("/");
 		} else {
-			setLoading(false);
+			setLoading( false);
 		}
 	});
 
@@ -143,12 +128,12 @@ const Index = () => {
 	};
 
 	return (
-		<div className={bodyWrapper}>  
+		<div className={bodyWrapper}>
 			{loading ? (
-				<p>Loading.....</p>
-			) : (
+				<p style={{ textAlign: "center" }}>Loading.....</p>   
+			) : (    
 				<Formik
-					initialValues={initialValues}
+					initialValues={initialValues}      
 					onSubmit={(values) => {
 						login(values);
 					}}
@@ -221,8 +206,8 @@ const Index = () => {
 										</Typography>
 
 										<Button
-										variant="contained"
-										color="primary"
+											variant="contained"
+											color="primary"
 											type="submit"
 											className={buttonStyle}
 										>

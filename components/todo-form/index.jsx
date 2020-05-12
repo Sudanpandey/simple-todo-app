@@ -17,8 +17,10 @@ const useStyles = makeStyles({
 	formWrapper: {
 		width: "100%",
 		height: "100%",
+		borderRadius: "5px",
 		backgroundColor: " #F2F2F2",
-		textAlign: "center",
+
+		padding: "0px 30px",
 	},
 	inputBorder: {
 		border: "1px solid #CCCCCC",
@@ -27,38 +29,42 @@ const useStyles = makeStyles({
 		border: "1px solid red",
 	},
 	inputStyle: {
-		width: "300px",
+		fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+		color:"#3F3738",
+		width: "100%",
 		backgroundColor: "#ffffff",
 		outline: "none",
 		borderRadius: "5px",
-		padding: "2px 10px",
+		padding: "2px 15px",
 		boxShadow: "none",
-		marginTop: "50px",
+	},
+	messageStyle: {
+		fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+		fontSize: "16px",
+		color:"#3F3738",	
+		width: "93.7%",
+		backgroundColor: "#ffffff",
+		outline: "none",
+		borderRadius: "5px",
+		padding: "8px 15px",
+		boxShadow: "none",
+
+		"&::placeholder": {
+			color: "#9B9FAE",
+		},
 	},
 	errorMessageStyle: {
 		fontSize: 12,
 		color: "red",
 	},
-	cancelButtonStyle: {
-		marginTop: "100px",
-		marginBottom: "60px",
-		padding: "5px",
-		color: "#FFFFFF",
-		boxShadow: "none",
-		marginLeft: "8px",
-	},
-	addButtonStyle: {
-		marginTop: "100px",
-		marginBottom: "60px",
-		padding: "5px",
-		color: "#FFFFFF",
-		boxShadow: "none",
-		marginLeft: "8px",
-	},
+
 	buttonWrapper: {
 		display: "flex",
 		flexDirection: "row",
-		justifyContent: "space-around",
+		justifyContent: "space-between",
+		padding: "25px 0px",
+
+		boxShadow: "none",
 	},
 });
 
@@ -69,9 +75,8 @@ const TodoForm = ({ initialValues, addTodos, editTodo, handleClose }) => {
 		inputBorderWithError,
 		inputStyle,
 		errorMessageStyle,
-		cancelButtonStyle,
-		addButtonStyle,
 		buttonWrapper,
+		messageStyle,
 	} = useStyles();
 
 	return (
@@ -94,14 +99,25 @@ const TodoForm = ({ initialValues, addTodos, editTodo, handleClose }) => {
 				return (
 					<form onSubmit={handleSubmit}>
 						<Box className={formWrapper}>
-							<Box>
+							<Typography
+								style={{
+									paddingTop: "20px",
+									paddingBottom: "20px",
+									fontSize: "18px",
+									textAlign: "center",
+									color:"#3F3738"
+								}}
+							>
+								{values.todoID ? "Edit Todo" : "Add  Todo"}
+							</Typography>
+							<Box style={{ marginBottom: "25px" }}>
 								<Input
 									name="input"
 									type="text"
 									value={values.input}
 									onBlur={handleBlur}
 									onChange={handleChange}
-									placeholder="Type  Title of your Task here."
+									placeholder="Enter the title of your task."
 									disableUnderline={true}
 									className={`${inputStyle} ${
 										touched.input && errors.input
@@ -122,9 +138,9 @@ const TodoForm = ({ initialValues, addTodos, editTodo, handleClose }) => {
 									onBlur={handleBlur}
 									aria-label="minimum height"
 									rowsMin={6}
-									placeholder="Type Description of Task  here"
-									className={`${inputStyle} ${
-										touched.input && errors.input
+									placeholder="Enter the description of your task."
+									className={`${messageStyle} ${
+										touched.body && errors.body
 											? inputBorderWithError
 											: inputBorder
 									}`}
@@ -137,9 +153,8 @@ const TodoForm = ({ initialValues, addTodos, editTodo, handleClose }) => {
 							<Box className={buttonWrapper} boxShadow={1}>
 								<Button
 									onClick={handleClose}
-									variant="contained"
 									color="secondary"
-									className={cancelButtonStyle}
+									variant="outlined"
 								>
 									Cancel
 								</Button>
@@ -147,7 +162,6 @@ const TodoForm = ({ initialValues, addTodos, editTodo, handleClose }) => {
 									variant="contained"
 									color="primary"
 									type="submit"
-									className={addButtonStyle}
 								>
 									{values.todoID ? "Edit Task" : "Add Task"}
 								</Button>

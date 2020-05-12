@@ -32,12 +32,7 @@ const useStyles = makeStyles({
 	},
 });
 
-const TodoItem = ({
-	todo,
-	setSelectedTodo,
-	completeTodo,
-	handleOpen,
-}) => {
+const TodoItem = ({ todo, setSelectedTodo, completeTodo, handleOpen }) => {
 	const { secondaryHeading, strikeText } = useStyles();
 
 	return (
@@ -81,14 +76,20 @@ const TodoItem = ({
 							control={
 								<Button
 									disabled={todo.completed}
-									onClick={() => {      
+									onClick={() => {
 										setSelectedTodo(todo);
 										handleOpen("edit", true);
 									}}
 								>
-									<EditIcon style={{ color: "#178FEB" }} />
+									<EditIcon
+										style={{
+											color: todo.completed
+												? "#CBCBCB"
+												: "#178FEB",
+										}}
+									/>
 								</Button>
-							}   
+							}
 						/>
 						<FormControlLabel
 							aria-label="Acknowledge"
@@ -99,7 +100,13 @@ const TodoItem = ({
 									disabled={todo.completed}
 									onClick={() => completeTodo(todo)}
 								>
-									<DoneIcon style={{ color: "#5BB85B" }} />
+									<DoneIcon
+										style={{
+											color: todo.completed
+												? "#CBCBCB"
+												: "#5BB85B",
+										}}
+									/>
 								</Button>
 							}
 						/>
