@@ -50,7 +50,6 @@ const useStyles = makeStyles({
 		marginTop: "5px",
 		borderRadius: "5px",
 		width: "10%",
-		backgroundColor: "#5BB85B",
 		color: "#FFFFFF",
 	},
 	bodyWrapper: {
@@ -63,7 +62,6 @@ const useStyles = makeStyles({
 		marginLeft: "600px",
 		borderRadius: "5px",
 		color: "#FFFFFF",
-		backgroundColor: "#5BB85B",
 		padding: "15px",
 	},
 	scrollWrapper: {
@@ -81,6 +79,26 @@ const useStyles = makeStyles({
 		backgroundColor: "#444444",
 		textAlign: "center",
 		color: "#ffffff",
+	},
+	todoForm: {
+		width: "500px",
+		marginLeft: "400px",
+		marginTop: "100px",
+		// backgroundColor: " #F2F2F2",
+		textAlign: "center",
+		// top: "14%",
+		// left: "29%",
+	},
+	confirmBox: {
+		width: "300px",
+		marginLeft: "500px",
+		marginTop: "100px",
+		top: "15%",
+		left: "15%",
+		// backgroundColor: " #F2F2F2",
+		textAlign: "center",
+
+		// backgroundColor: "#FFFFFF",
 	},
 });
 
@@ -102,6 +120,8 @@ const Todo = () => {
 		scrollWrapper,
 		scrollbar,
 		footer,
+		todoForm,
+		confirmBox,
 	} = useStyles();
 
 	const [selectedDate, setSelectedDate] = useState(
@@ -129,7 +149,7 @@ const Todo = () => {
 			const {
 				data: { data },
 			} = await axios.get(
-				`http://localhost:3000/dateTodos?userID=${userID}&selectedDate=${selectedDate}`
+				`${process.env.API_URL}/dateTodos?userID=${userID}&selectedDate=${selectedDate}`
 			);
 			setTodos(data);
 		} catch (error) {
@@ -214,11 +234,11 @@ const Todo = () => {
 			) : (
 				<Box>
 					<Modal
-						style={{
-							width: "500px",
-							top: "14%",
-							left: "29%",
-						}}
+						className={
+							["add", "edit"].includes(open.mode)
+								? todoForm
+								: confirmBox
+						}
 						open={open.action}
 						onClose={handleClose}
 						aria-labelledby="simple-modal-title"
@@ -277,6 +297,7 @@ const Todo = () => {
 							<Button
 								variant="contained"
 								type="button"
+								color="primary"
 								onClick={logout}
 								className={logoutButton}
 							>
@@ -287,6 +308,8 @@ const Todo = () => {
 					<Box className={bodyWrapper}>
 						<Button
 							type="button"
+							color="primary"
+							variant="contained"
 							onClick={() => handleOpen("add", true)}
 							className={addTodoButton}
 						>

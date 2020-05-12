@@ -81,14 +81,14 @@ const TodoItem = ({
 							control={
 								<Button
 									disabled={todo.completed}
-									onClick={() => {
+									onClick={() => {      
 										setSelectedTodo(todo);
 										handleOpen("edit", true);
 									}}
 								>
 									<EditIcon style={{ color: "#178FEB" }} />
 								</Button>
-							}
+							}   
 						/>
 						<FormControlLabel
 							aria-label="Acknowledge"

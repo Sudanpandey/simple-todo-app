@@ -21,7 +21,6 @@ import MuiAlert from "@material-ui/lab/Alert";
 
 import { Formik } from "formik";
 
-
 const useStyles = makeStyles({
 	bodyWrapper: {
 		display: "flex",
@@ -78,7 +77,7 @@ const useStyles = makeStyles({
 	signupButton: {
 		borderRadius: "5px",
 		width: "60%",
-		backgroundColor: "#5BB85C",
+		// backgroundColor: "#5BB85C",
 		color: "#FFFFFF",
 		marginTop: "10px",
 		marginLeft: "70px",
@@ -400,10 +399,8 @@ const signup = () => {
 										</Box>
 										<Box style={{ alignContent: "center" }}>
 											<Button
-												// onClick={() =>
-												// 	// Router.push("/login")
-												// }
 												variant="contained"
+												color="primary"
 												type="submit"
 												disabled={!values.accept_terms}
 												className={signupButton}
