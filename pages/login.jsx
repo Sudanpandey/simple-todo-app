@@ -76,7 +76,6 @@ function Alert(props) {
 	return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-
 const initialValues = {
 	email: "",
 	password: "",
@@ -98,11 +97,11 @@ const Index = () => {
 	const [message, setMessage] = useState();
 
 	useEffect(() => {
-		const token = localStorage.getItem("token")
+		const token = localStorage.getItem("token");
 		if (token) {
 			Router.push("/");
 		} else {
-			setLoading( false);
+			setLoading(false);
 		}
 	});
 
@@ -112,7 +111,7 @@ const Index = () => {
 				data: {
 					data: { token },
 				},
-			} = await axios.post("http://localhost:3000/login", values);
+			} = await axios.post(`${process.env.API_URL}/login`, values);
 			if (token) {
 				localStorage.setItem("token", token);
 				Router.push("/");
@@ -130,10 +129,10 @@ const Index = () => {
 	return (
 		<div className={bodyWrapper}>
 			{loading ? (
-				<p style={{ textAlign: "center" }}>Loading.....</p>   
-			) : (    
+				<p style={{ textAlign: "center" }}>Loading.....</p>
+			) : (
 				<Formik
-					initialValues={initialValues}      
+					initialValues={initialValues}
 					onSubmit={(values) => {
 						login(values);
 					}}
