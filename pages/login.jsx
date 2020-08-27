@@ -10,7 +10,7 @@ import {
 	Input,
 	Snackbar,
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";    
 import { logInValidationSchema } from "../validations/form/login";
 
 import MuiAlert from "@material-ui/lab/Alert";
@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 	bodyWrapper: {
 		display: "flex",
 		flexDirection: "row",
-		justifyContent: "center",
+		justifyContent: "center",     
 		alignItems: "center",
 	},
 	formWrapper: {
@@ -122,7 +122,7 @@ const Index = () => {
 					data: { message },
 				},
 			} = error;
-			setMessage(message);
+			setMessage(message);  
 		}
 	};
 
@@ -237,7 +237,7 @@ const Index = () => {
 				onClose={() => setMessage(false)}
 			>
 				<Alert
-					style={{ marginBottom: "5	0px" }}
+					style={{ marginBottom: "50px" }}   
 					onClose={() => setMessage(false)}
 					severity="error"
 				>

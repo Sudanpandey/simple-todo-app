@@ -9,7 +9,7 @@ export default class MyDocument extends Document {
 
 		// Step 2: Retrieve styles from components in the page
 		const page = renderPage((App) => (props) =>
-			sheet.collectStyles(<App {...props} />)
+			sheet.collectStyles(<App {...props} />)              
 		);
 
 		// Step 3: Extract the styles as <style> tags
@@ -23,7 +23,7 @@ export default class MyDocument extends Document {
 		return (
 			<html>
 				<body>
-					<Main />
+					<Main />              
 					<NextScript />
 				</body>
 			</html>

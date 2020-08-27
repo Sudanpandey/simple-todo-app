@@ -25,7 +25,7 @@ const Wrapper = styled.div`
 
 const useStyles = makeStyles({
 	secondaryHeading: {
-		color: "green",
+		color: "green",               
 	},
 	strikeText: {
 		textDecoration: "line-through",
@@ -39,7 +39,7 @@ const TodoItem = ({ todo, setSelectedTodo, completeTodo, handleOpen }) => {
 		<ExpansionPanel>
 			<Wrapper>
 				<ExpansionPanelSummary
-					expandIcon={<ExpandMoreIcon />}
+					expandIcon={<ExpandMoreIcon />}dt
 					aria-controls="panel1bh-content"
 					id="panel1bh-header"
 				>

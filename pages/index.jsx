@@ -15,15 +15,14 @@ import {
 } from "@material-ui/pickers";
 import Grid from "@material-ui/core/Grid";
 
+import ListIcon from "@material-ui/icons/List";
+import ViewComfyIcon from "@material-ui/icons/ViewComfy";
+
 import { makeStyles } from "@material-ui/core/styles";
 
-import { TodoForm, TodoItem, ConfirmBox } from "../components";
+import { TodoForm, ListView, GridView, ConfirmBox } from "../components";
 
 const useStyles = makeStyles({
-	root: {
-		marginTop: "30px",
-		width: "100%",
-	},
 	pickerStyle: {
 		padding: " 3px 0px 3px 13px",
 		backgroundColor: "#FFFFFF",
@@ -45,9 +44,16 @@ const useStyles = makeStyles({
 		width: "130px",
 		height: "40px",
 	},
+	icon: {
+		backgroundColor: "#5BB85B",
+		color: "#5BB85B",
+		width: "30px",
+		height: "30px",
+	},
+
 	logoutButton: {
 		marginTop: "16px",
-		marginRight:"29px",
+		marginRight: "29px",
 		borderRadius: "5px",
 		padding: "8px",
 		height: "1%",
@@ -56,9 +62,9 @@ const useStyles = makeStyles({
 	},
 	bodyWrapper: {
 		width: "100%",
-		height: "100%",
 		backgroundColor: " #F2F2F2",
 	},
+	toggleView: {},
 	addTodoButton: {
 		marginTop: "30px",
 		padding: "8px",
@@ -67,15 +73,7 @@ const useStyles = makeStyles({
 		borderRadius: "5px",
 		color: "#FFFFFF",
 	},
-	scrollWrapper: {
-		display: "flex",
-		justifyContent: "center",
-	},
-	scrollbar: {
-		width: "60%",
-		height: "500px",
-		overflow: "scroll",
-	},
+
 	footer: {
 		width: "100%",
 		height: "60px",
@@ -104,15 +102,13 @@ const initialValues = {
 const Todo = () => {
 	const {
 		pickerStyle,
-		root,
 		navigation,
 		navigationWrapper,
 		logo,
+		icon,
 		logoutButton,
 		bodyWrapper,
 		addTodoButton,
-		scrollWrapper,
-		scrollbar,
 		footer,
 		todoForm,
 		confirmBox,
@@ -137,6 +133,11 @@ const Todo = () => {
 	}, []);
 
 	const getTodos = async (selectedDate) => {
+		{
+			/* <Box onClick={toggleView} className={toggleView}>
+	<img className={icon} src="/static/View.png" />
+</Box> */
+		}
 		try {
 			const token = localStorage.getItem("token");
 			const { userID } = jwt_decode(token);
@@ -184,7 +185,7 @@ const Todo = () => {
 				values
 			);
 			handleClose();
-			getTodos(moment(values.selectedDate).format("YYYY-MM-DD"));
+			getTodos(moment(values.selectedDate).format("YYYY-MM- DD"));
 		} catch (error) {
 			console.log(error);
 		}
@@ -219,6 +220,11 @@ const Todo = () => {
 		const formatedDate = moment(new Date(date)).format("YYYY-MM-DD");
 		setSelectedDate(formatedDate);
 		getTodos(formatedDate);
+	};
+
+	const [view, setView] = useState("list");
+	const toggleView = () => {
+		view === "list" ? setView("grid") : setView("list");
 	};
 
 	return (
@@ -297,7 +303,16 @@ const Todo = () => {
 							</Button>
 						</Box>
 					</Box>
+
 					<Box className={bodyWrapper}>
+						<Box display="flex" justifyContent="flex-end">
+							{view === "list" ? (
+								<ViewComfyIcon onClick={toggleView} />
+							) : (
+								<ListIcon onClick={toggleView} />
+							)}
+						</Box>
+
 						{moment(selectedDate).isSameOrAfter(today) && (
 							<Button
 								type="button"
@@ -309,37 +324,26 @@ const Todo = () => {
 								Add Todo
 							</Button>
 						)}
-
-						<Box className={scrollWrapper}>
-							<Box className={scrollbar}>
-								<div className={root}>
-									{todos.length ? (
-										todos.map((todo) => {
-											return (
-												<TodoItem
-													todo={todo}
-													deleteTodos={deleteTodos}
-													setSelectedTodo={
-														setSelectedTodo
-													}
-													completeTodo={completeTodo}
-													handleOpen={handleOpen}
-												/>
-											);
-										})
-									) : (
-										<p
-											style={{
-												textAlign: "center",
-												color: "#606F89",
-											}}
-										>
-											{`No todos found for
-										${moment(selectedDate).format("dddd, MMMM Do YYYY")}`}
-										</p>
-									)}
-								</div>
-							</Box>
+						<Box height="56.5vh" overflow="scroll">
+							{view === "list" ? (
+								<ListView
+									todos={todos}
+									deleteTodos={deleteTodos}
+									setSelectedTodo={setSelectedTodo}
+									completeTodo={completeTodo}
+									handleOpen={handleOpen}
+									selectedDate={selectedDate}
+								/>
+							) : (
+								<GridView
+									todos={todos}
+									deleteTodos={deleteTodos}
+									setSelectedTodo={setSelectedTodo}
+									completeTodo={completeTodo}
+									handleOpen={handleOpen}
+									selectedDate={selectedDate}
+								/>
+							)}
 						</Box>
 					</Box>
 					<Box className={footer}>

@@ -240,7 +240,7 @@ const signup = () => {
 													<Input
 														name="lastname"
 														type="text"
-														value={values.lastname}
+														value={values.lastname}     
 														onChange={handleChange}
 														onBlur={handleBlur}
 														placeholder="Last Name"
