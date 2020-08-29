@@ -154,7 +154,7 @@ const Todo = () => {
 
 	const addTodos = async (values) => {
 		try {
-			const token = localStorage.getItem("token");
+			const token = localStorage.getItem("token");	
 			const { userID } = jwt_decode(token);
 			await axios.post(`${process.env.API_URL}/todos`, {
 				...values,
@@ -263,6 +263,7 @@ const Todo = () => {
 						)}
 					</Modal>
 
+<Box  >
 					<Box className={navigation}>
 						<Box className={navigationWrapper}>
 							<Button>
@@ -305,9 +306,9 @@ const Todo = () => {
 					</Box>
 
 					<Box className={bodyWrapper}>
-						<Box display="flex" justifyContent="flex-end">
-							{view === "list" ? (
-								<ViewComfyIcon onClick={toggleView} />
+						<Box display="flex" justifyContent="flex-end" padding="20px">
+							{view === "list" ? (	
+								<ViewComfyIcon onClick={toggleView}  />
 							) : (
 								<ListIcon onClick={toggleView} />
 							)}
@@ -324,7 +325,7 @@ const Todo = () => {
 								Add Todo
 							</Button>
 						)}
-						<Box height="56.5vh" overflow="scroll">
+						<Box height="52vh" overflow="scroll">
 							{view === "list" ? (
 								<ListView
 									todos={todos}
@@ -345,6 +346,7 @@ const Todo = () => {
 								/>
 							)}
 						</Box>
+					</Box>
 					</Box>
 					<Box className={footer}>
 						<p style={{ padding: "20px" }}>
